@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete - Product Database</title>
+    <link rel='icon' type='image/x-icon' href='/assets/favicon.ico'>
+</head>
+<body style="background-color: #282c34;">
+    <%- include('_header'); %>
+
+    <% if(error){ %>
+        <div class="alert alert-danger alert-dismissible fade show montserrat" role="alert">
+            <strong>Error:</strong> <%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% }; %>
+
+    <% if(modal){ %>
+        <div class="modal fade montserrat" id="deletionModal" tabindex="-1" aria-labelledby="deletionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border" style="background-color: #282c34;">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="resultModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i style="color: white;" class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body text-white">
+                    Are you sure you want to delete <%= name %>
+                </div>
+                <div class="modal-footer text-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" onclick="productDelete('<%= name %>')">Delete Product</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const deletionModal = new bootstrap.Modal('#deletionModal');
+            deletionModal.show();
+        </script>
+    <% }; %>
+
+    <% if(deleted){ %>
+        <div class="modal fade montserrat" id="deletedModal" tabindex="-1" aria-labelledby="deletedModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border" style="background-color: #282c34;">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="resultModalLabel">Deleted Product - <%= name %></h5>
+                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i style="color: white;" class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body text-white">
+                    Successfully deleted product <%= name %>
+                </div>
+                <div class="modal-footer text-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const deletedModal = new bootstrap.Modal('#deletedModal');
+            deletedModal.show();
+        </script>
+    <% }; %>
+ 
+    <form class="d-grid gap-2 container p-5 montserrat" style="justify-items: center;" onsubmit="productConfirmDelete()" method="dialog">
+        <p for="productLookup" class="text-white form-label" style="font-size: 42px; text-align: center; font-weight: 600;">Delete Product</p>
+        <p style="text-align: centre;">Delete a product using its name.</p>
+        <input required type="name" class="form-control bg-dark text-white" style="width: 60%; text-align: center;" id="productDeleteName" placeholder="Input a product name">
+        <button type="submit" class="btn btn-danger" type="button" style="width: 60%;">Delete Product</button>
+    </form>
+    
+    <%- include('_footer'); %>
+</body>
+</html>
+<script>
+    function productConfirmDelete(){
+        if(!this.productDeleteName.value){
+            return;
+        };
+        location.href = '/delete/confirm?name=' + this.productDeleteName.value;
+    };
+    function productDelete(name){
+        if(!name){
+            return;
+        };
+        location.href = '/delete?name=' + name;
+    };
+</script>

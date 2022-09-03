@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Product Database</title>
+    <link rel='icon' type='image/x-icon' href='/assets/favicon.ico'>
+</head>
+<body style="background-color: #282c34;">
+    <%- include('_header'); %>
+ 
+    <div class="d-grid gap-2 container p-5 montserrat" style="justify-items: center;" onsubmit="productLookup()" method="dialog">
+        <p for="productLookup" class="text-white form-label" style="font-size: 42px; text-align: center; font-weight: 600;">404 Not Found</p>
+        <p class="text-muted" style="text-align: centre;">The page you request can not be found.</p>
+    </div>
+    
+    <%- include('_footer'); %>
+</body>
+</html>

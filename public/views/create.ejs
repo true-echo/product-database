@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - Product Database</title>
+    <link rel='icon' type='image/x-icon' href='/assets/favicon.ico'>
+</head>
+<body style="background-color: #282c34;">
+    <%- include('_header'); %>
+
+    <% if(error){ %>
+        <div class="alert alert-danger alert-dismissible fade show montserrat" role="alert">
+            <strong>Error:</strong> <%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% }; %>
+
+    <% if(modal){ %>
+        <div class="modal fade montserrat" id="creationModal" tabindex="-1" aria-labelledby="creationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border" style="background-color: #282c34;">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="creationModalLabel">Create a product</h5>
+                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i style="color: white;" class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body text-white montserrat">
+                    <form class="search" style="justify-items: center;" onsubmit="productCreate()" method="dialog">
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control bg-dark text-white" id="productName" placeholder="Product Name" value="<%= name %>">
+                            <label class="text-white" for="floatingInput">Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control bg-dark text-white" id="productDescription" placeholder="Product Description">
+                            <label class="text-white" for="floatingInput">Description</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="number" class="form-control bg-dark text-white" id="productPrice" placeholder="Product Price">
+                            <label class="text-white" for="floatingInput">Price (£)</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="number" class="form-control bg-dark text-white" id="productQuantity" placeholder="Product Price">
+                            <label class="text-white" for="floatingInput">Quantity</label>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="invalidCheck" required>
+                              <label class="form-check-label" for="invalidCheck">
+                                Agree to the <a style="text-decoration: none;" href="/terms">Terms and conditions</a>
+                              </label>
+                            </div>
+                        </div> -->
+                    </div>
+                <div class="modal-footer text-white">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const creationModal = new bootstrap.Modal('#creationModal');
+            creationModal.show();
+        </script>
+    <% }; %>
+
+    <% if(created){ %>
+        <div class="modal fade montserrat" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border" style="background-color: #282c34;">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="resultModalLabel">Product - <%= name %></h5>
+                    <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i style="color: white;" class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body text-white">
+                    Successfully created product <%= name %>
+                </div>
+                <div class="modal-footer text-white">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const createModal = new bootstrap.Modal('#createModal');
+            createModal.show();
+        </script>
+    <% }; %>
+ 
+    <form class="d-grid gap-2 container p-5 montserrat" style="justify-items: center;" onsubmit="productBuild()" method="dialog">
+        <p for="productLookup" class="text-white form-label" style="font-size: 42px; text-align: center; font-weight: 600;">Create Product</p>
+        <p style="text-align: centre;">Enter a product name and click the button below to begin creating a product.</p>
+        <input required type="name" class="form-control bg-dark text-white" style="width: 60%; text-align: center;" id="productCreateName" placeholder="Input a product name">
+        <button type="submit" class="btn btn-primary" type="button" style="width: 60%;">Create Product</button>
+    </form>
+    
+    <%- include('_footer'); %>
+</body>
+</html>
+<script>
+    function productBuild(){
+        if(!this.productCreateName.value){
+            return;
+        };
+        location.href = '/build?name=' + this.productCreateName.value
+    };
+    function productCreate(){
+        if(!this.productName.value && this.productDescription.value && this.productPrice.value && this.productQuantity.value){
+            return;
+        };
+        location.href = '/create?name=' + this.productName.value + '&description=' + this.productDescription.value + '&price=' + this.productPrice.value + '&quantity=' + this.productQuantity.value
+    };
+</script>

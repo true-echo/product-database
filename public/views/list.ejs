@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List - Product Database</title>
+    <link rel='icon' type='image/x-icon' href='/assets/favicon.ico'>
+</head>
+<body style="background-color: #282c34;">
+    <%- include('_header'); %>
+ 
+    <div class="d-grid gap-2 container p-5 montserrat" style="justify-items: center;">
+        <p for="productLookup" class="text-white form-label" style="font-size: 42px; text-align: center; font-weight: 600;">Product List</p>
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let product of products){ %>
+                <% if(product.purchased == true){ %>
+                    <tr>
+                        <th scope="row"><%= product.count %></th>
+                        <td><%= product.id %></td>
+                        <td><%= product.name %></td>
+                        <td><%= product.description %></td>
+                        <td><%= product.quantity %></td>
+                        <td><%= product.price %> (Purchased)</td>
+                        <td><button class="btn btn-danger" onclick="deleteProduct('<%= product.name %>')">Delete</button></td>
+                    </tr>
+                <% } else { %>
+                    <tr>
+                        <th scope="row"><%= product.count %></th>
+                        <td><%= product.id %></td>
+                        <td><%= product.name %></td>
+                        <td><%= product.description %></td>
+                        <td><%= product.quantity %></td>
+                        <td><%= product.price %></td>
+                        <td><button class="btn btn-danger" onclick="deleteProduct('<%= product.name %>')">Delete</button></td>
+                    </tr>
+                <% }; %>
+              <% }; %>
+            </tbody>
+        </table>
+    </div>
+    
+    <%- include('_footer'); %>
+</body>
+</html>
+<script>
+    function deleteProduct(name){
+        if(!name){
+            return;
+        };
+        location.href = '/delete?name=' + name;
+    }
+</script>
